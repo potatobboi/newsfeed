@@ -1,8 +1,12 @@
 package com.sparta.newsfeed.user.controller;
 
 import com.sparta.newsfeed.user.dto.CommonResponseDto;
+import com.sparta.newsfeed.user.dto.LoginRequestDto;
 import com.sparta.newsfeed.user.dto.SignupRequestDto;
+import com.sparta.newsfeed.user.jwt.JwtUtil;
+import com.sparta.newsfeed.user.security.UserDetailsService;
 import com.sparta.newsfeed.user.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
 public class UserController {
-    private final UserService userservice;
+    private final UserService userService;
+    private final JwtUtil jwtUtil;
 
     @GetMapping("/signup")
     public String signupPage() {
@@ -44,6 +49,18 @@ public class UserController {
 
         }
 
-        return userservice.createUser(signupRequestDto);
+        return userService.createUser(signupRequestDto);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<CommonResponseDto> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
+        try {
+            userService.login(loginRequestDto);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(400).body(new CommonResponseDto(e.getMessage(), 400));
+        }
+
+        response.setHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(loginRequestDto.getUsername()));
+        return ResponseEntity.status(200).body(new CommonResponseDto("로그인 성공", 200));
     }
 }

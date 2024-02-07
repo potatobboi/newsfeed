@@ -1,6 +1,7 @@
 package com.sparta.newsfeed.user.service;
 
 import com.sparta.newsfeed.user.dto.CommonResponseDto;
+import com.sparta.newsfeed.user.dto.LoginRequestDto;
 import com.sparta.newsfeed.user.dto.SignupRequestDto;
 import com.sparta.newsfeed.user.entity.User;
 import com.sparta.newsfeed.user.repository.UserRepository;
@@ -33,11 +34,15 @@ public class UserService {
         return ResponseEntity.status(200).body(new CommonResponseDto("회원가입 성공", 200));
     }
 
-    public UserDetailsImpl getUserDetailsByUsername(String username){
+    public void login(LoginRequestDto loginRequestDto) {
+        String username = loginRequestDto.getUsername();
+
         User user = userRepository.findByUsername(username).orElseThrow(
-                ()-> new NullPointerException("존재하지 않는 유저네임입니다.")
+                ()-> new IllegalArgumentException("존재하지 않는 유저네임입니다.")
         );
 
-        return new UserDetailsImpl(user);
+        if(!passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())){
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
     }
 }

@@ -3,7 +3,7 @@ package com.sparta.newsfeed.user.jwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.newsfeed.user.dto.CommonResponseDto;
 import com.sparta.newsfeed.user.security.UserDetailsImpl;
-import com.sparta.newsfeed.user.service.UserService;
+import com.sparta.newsfeed.user.security.UserDetailsService;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -25,7 +25,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final ObjectMapper objectMapper;
-    private final UserService userService;
+    private final UserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -38,7 +38,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 String username = info.getSubject();
 
                 SecurityContext context = SecurityContextHolder.createEmptyContext();
-                UserDetailsImpl userDetails = userService.getUserDetailsByUsername(username);
+                UserDetailsImpl userDetails = userDetailsService.getUserDetailsByUsername(username);
                 Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null);
 
                 context.setAuthentication(authentication);

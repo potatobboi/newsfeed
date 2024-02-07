@@ -3,6 +3,7 @@ package com.sparta.newsfeed.user.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.newsfeed.user.jwt.JwtAuthorizationFilter;
 import com.sparta.newsfeed.user.jwt.JwtUtil;
+import com.sparta.newsfeed.user.security.UserDetailsService;
 import com.sparta.newsfeed.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -20,7 +21,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
     private final JwtUtil jwtUtil;
     private final ObjectMapper objectMapper;
-    private final UserService userService;
+    private final UserDetailsService userDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -29,7 +30,7 @@ public class WebSecurityConfig {
 
     @Bean
     public JwtAuthorizationFilter jwtAuthorizationFilter() {
-        return new JwtAuthorizationFilter(jwtUtil, objectMapper, userService);
+        return new JwtAuthorizationFilter(jwtUtil, objectMapper, userDetailsService);
     }
 
     @Bean
@@ -46,10 +47,10 @@ public class WebSecurityConfig {
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
                                 .requestMatchers("/api/users/**").permitAll() // '/api/user/'로 시작하는 요청 모두 접근 허가
                                 .anyRequest().authenticated() // 그 외 모든 요청 인증처리
-                )
-                .formLogin((formLogin) ->
-                        formLogin.loginPage("/api/users/login-page").permitAll()
                 );
+//                .formLogin((formLogin) ->
+//                        formLogin.loginPage("/api/users/login-page").permitAll()
+//                );
 
         // 접근 불가 페이지
         http.exceptionHandling((exceptionHandling) ->
