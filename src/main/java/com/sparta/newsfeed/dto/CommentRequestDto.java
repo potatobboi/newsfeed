@@ -1,2 +1,4 @@
-package com.sparta.newsfeed.dto;public class CommentRequestDto {
+package com.sparta.newsfeed.dto;
+
+public class CommentRequestDto {
 }

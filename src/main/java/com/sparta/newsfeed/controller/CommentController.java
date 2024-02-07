@@ -1,2 +1,4 @@
-package com.sparta.newsfeed.controller;public class CommentController {
+package com.sparta.newsfeed.controller;
+
+public class CommentController {
 }

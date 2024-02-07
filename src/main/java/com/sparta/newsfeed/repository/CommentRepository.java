@@ -1,2 +1,4 @@
-package com.sparta.newsfeed.repository;public class CommentRepository {
+package com.sparta.newsfeed.repository;
+
+public class CommentRepository {
 }

@@ -1,2 +1,4 @@
-package com.sparta.newsfeed.service;public class CommentService {
+package com.sparta.newsfeed.service;
+
+public class CommentService {
 }
