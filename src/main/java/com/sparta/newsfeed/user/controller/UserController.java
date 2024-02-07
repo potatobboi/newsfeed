@@ -4,7 +4,6 @@ import com.sparta.newsfeed.user.dto.CommonResponseDto;
 import com.sparta.newsfeed.user.dto.LoginRequestDto;
 import com.sparta.newsfeed.user.dto.SignupRequestDto;
 import com.sparta.newsfeed.user.jwt.JwtUtil;
-import com.sparta.newsfeed.user.security.UserDetailsService;
 import com.sparta.newsfeed.user.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;

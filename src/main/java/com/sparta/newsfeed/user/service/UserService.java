@@ -5,11 +5,9 @@ import com.sparta.newsfeed.user.dto.LoginRequestDto;
 import com.sparta.newsfeed.user.dto.SignupRequestDto;
 import com.sparta.newsfeed.user.entity.User;
 import com.sparta.newsfeed.user.repository.UserRepository;
-import com.sparta.newsfeed.user.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,10 +36,10 @@ public class UserService {
         String username = loginRequestDto.getUsername();
 
         User user = userRepository.findByUsername(username).orElseThrow(
-                ()-> new IllegalArgumentException("존재하지 않는 유저네임입니다.")
+                () -> new IllegalArgumentException("존재하지 않는 유저네임입니다.")
         );
 
-        if(!passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())){
+        if (!passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
     }
