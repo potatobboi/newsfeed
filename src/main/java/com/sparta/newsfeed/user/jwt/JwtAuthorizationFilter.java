@@ -39,7 +39,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
                 SecurityContext context = SecurityContextHolder.createEmptyContext();
                 UserDetailsImpl userDetails = userDetailsService.getUserDetailsByUsername(username);
-                Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null);
+                Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
                 context.setAuthentication(authentication);
                 SecurityContextHolder.setContext(context);
@@ -47,6 +47,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 response.setStatus(400);
                 response.setContentType("application/jason; charset=UTF-8");
                 response.getWriter().write(objectMapper.writeValueAsString(new CommonResponseDto("유효하지 않은 토큰입니다.", 400)));
+                return;
             }
 
         }
