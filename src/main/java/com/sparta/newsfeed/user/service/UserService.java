@@ -4,9 +4,11 @@ import com.sparta.newsfeed.user.dto.CommonResponseDto;
 import com.sparta.newsfeed.user.dto.SignupRequestDto;
 import com.sparta.newsfeed.user.entity.User;
 import com.sparta.newsfeed.user.repository.UserRepository;
+import com.sparta.newsfeed.user.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +31,13 @@ public class UserService {
         User user = new User(signupRequestDto, encodedPassword);
         userRepository.save(user);
         return ResponseEntity.status(200).body(new CommonResponseDto("회원가입 성공", 200));
+    }
+
+    public UserDetailsImpl getUserDetailsByUsername(String username){
+        User user = userRepository.findByUsername(username).orElseThrow(
+                ()-> new NullPointerException("존재하지 않는 유저네임입니다.")
+        );
+
+        return new UserDetailsImpl(user);
     }
 }
