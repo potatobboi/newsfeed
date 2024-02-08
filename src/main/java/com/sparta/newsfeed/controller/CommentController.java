@@ -4,7 +4,8 @@ package com.sparta.newsfeed.controller;
 import com.sparta.newsfeed.dto.CommentRequestDto;
 import com.sparta.newsfeed.dto.CommentResponseDto;
 import com.sparta.newsfeed.service.CommentService;
-import org.springframework.stereotype.Controller;
+import com.sparta.newsfeed.user.security.UserDetailsImpl;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,19 +26,19 @@ public class CommentController {
     }
 
     @PostMapping
-    public CommentResponseDto createComment(@RequestBody CommentRequestDto requestDto){
+    public CommentResponseDto createComment(@RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         System.out.println("requestDto = " + requestDto.toString());
-        return commentService.createComment(requestDto);
+        return commentService.createComment(requestDto, userDetails);
     }
 
     @PutMapping("/{id}")
-    public Long updateComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto) {
-        return commentService.updateComment(id,requestDto);
+    public Long updateComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return commentService.updateComment(id,requestDto, userDetails);
     }
 
     @DeleteMapping("/{id}")
-    public Long deleteComment(@PathVariable Long id) {
-        return commentService.deleteComment(id);
+    public Long deleteComment(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return commentService.deleteComment(id, userDetails);
     }
 
 }
