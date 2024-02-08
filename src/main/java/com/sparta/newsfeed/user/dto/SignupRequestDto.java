@@ -20,7 +20,7 @@ public class SignupRequestDto {
     private String email;
 
     @Column(nullable = false)
-    private String emailVerifyKey;
+    private String encodedEmail;
 
     private String info;
 }

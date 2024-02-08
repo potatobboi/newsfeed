@@ -8,7 +8,5 @@ import lombok.ToString;
 @Setter
 @ToString
 public class MailRequestDto {
-    private String receiver;
-    private String title;
-    private String content;
+    private String receiverEmail;
 }
