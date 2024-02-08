@@ -1,11 +1,8 @@
 package com.sparta.newsfeed.user.controller;
 
 import com.sparta.newsfeed.user.dto.CommonResponseDto;
-import com.sparta.newsfeed.user.dto.LoginRequestDto;
 import com.sparta.newsfeed.user.dto.SignupRequestDto;
-import com.sparta.newsfeed.user.jwt.JwtUtil;
 import com.sparta.newsfeed.user.service.UserService;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -23,7 +23,6 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
-    private final JwtUtil jwtUtil;
 
     @GetMapping("/signup")
     public String signupPage() {

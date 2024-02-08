@@ -1,5 +1,6 @@
 package com.sparta.newsfeed.user.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.newsfeed.user.jwt.JwtAuthenticationFilter;
 import com.sparta.newsfeed.user.jwt.JwtAuthorizationFilter;
 import com.sparta.newsfeed.user.jwt.JwtUtil;
@@ -25,28 +26,29 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
     private final JwtUtil jwtUtil;
     private final UserDetailsServiceImpl userDetailsService;
+    private final ObjectMapper objectMapper;
     private final AuthenticationConfiguration authenticationConfiguration;
 
-    @Bean // bean 수동등록
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean // 수동등록
+    @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
-    @Bean // 수동등록
+    @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-        JwtAuthenticationFilter filter = new JwtAuthenticationFilter(jwtUtil);
+        JwtAuthenticationFilter filter = new JwtAuthenticationFilter(jwtUtil, objectMapper);
         filter.setAuthenticationManager(authenticationManager(authenticationConfiguration));
         return filter;
     }
 
     @Bean
     public JwtAuthorizationFilter jwtAuthorizationFilter() {
-        return new JwtAuthorizationFilter(jwtUtil, userDetailsService);
+        return new JwtAuthorizationFilter(jwtUtil, objectMapper, userDetailsService);
     }
 
     @Bean

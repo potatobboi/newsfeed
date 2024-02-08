@@ -5,7 +5,6 @@ import com.sparta.newsfeed.dto.CommentResponseDto;
 import com.sparta.newsfeed.entity.Comment;
 import com.sparta.newsfeed.repository.CommentRepository;
 import com.sparta.newsfeed.user.security.UserDetailsImpl;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

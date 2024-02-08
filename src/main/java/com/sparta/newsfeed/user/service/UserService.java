@@ -1,7 +1,6 @@
 package com.sparta.newsfeed.user.service;
 
 import com.sparta.newsfeed.user.dto.CommonResponseDto;
-import com.sparta.newsfeed.user.dto.LoginRequestDto;
 import com.sparta.newsfeed.user.dto.SignupRequestDto;
 import com.sparta.newsfeed.user.entity.User;
 import com.sparta.newsfeed.user.repository.UserRepository;
