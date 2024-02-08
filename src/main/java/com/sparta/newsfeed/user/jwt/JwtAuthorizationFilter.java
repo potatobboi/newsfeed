@@ -1,9 +1,6 @@
 package com.sparta.newsfeed.user.jwt;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.newsfeed.user.dto.CommonResponseDto;
-import com.sparta.newsfeed.user.security.UserDetailsImpl;
-import com.sparta.newsfeed.user.security.UserDetailsService;
+import com.sparta.newsfeed.user.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -15,43 +12,59 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Slf4j(topic = "JWT 검증 및 인가 필터")
+@Slf4j(topic = "JWT 검증 및 인가")
 @RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-    private final ObjectMapper objectMapper;
-    private final UserDetailsService userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String tokenValue = jwtUtil.getTokenFromRequest(request);
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain) throws ServletException, IOException {
 
-        if (!(tokenValue == null)) {
+        String tokenValue = jwtUtil.getTokenFromRequest(req);
 
-            if (jwtUtil.isValidToken(tokenValue)) {
-                Claims info = jwtUtil.getUserInfoFromToken(tokenValue);
-                String username = info.getSubject();
+        if (StringUtils.hasText(tokenValue)) {
+            // JWT 토큰 substring
+            tokenValue = jwtUtil.substringToken(tokenValue);
+            log.info(tokenValue);
 
-                SecurityContext context = SecurityContextHolder.createEmptyContext();
-                UserDetailsImpl userDetails = userDetailsService.getUserDetailsByUsername(username);
-                Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-
-                context.setAuthentication(authentication);
-                SecurityContextHolder.setContext(context);
-            } else {
-                response.setStatus(400);
-                response.setContentType("application/jason; charset=UTF-8");
-                response.getWriter().write(objectMapper.writeValueAsString(new CommonResponseDto("유효하지 않은 토큰입니다.", 400)));
+            if (!jwtUtil.validateToken(tokenValue)) {
+                log.error("Token Error");
                 return;
             }
 
+            Claims info = jwtUtil.getUserInfoFromToken(tokenValue);
+
+            try {
+                setAuthentication(info.getSubject());
+            } catch (Exception e) {
+                log.error(e.getMessage());
+                return;
+            }
         }
 
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(req, res);
+    }
+
+    // 인증 처리
+    public void setAuthentication(String username) {
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        Authentication authentication = createAuthentication(username);
+        context.setAuthentication(authentication);
+
+        SecurityContextHolder.setContext(context);
+    }
+
+    // 인증 객체 생성
+    private Authentication createAuthentication(String username) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 }

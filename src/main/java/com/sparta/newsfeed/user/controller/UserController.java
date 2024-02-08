@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j(topic = "UserController")
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
 public class UserController {
@@ -49,17 +50,5 @@ public class UserController {
         }
 
         return userService.createUser(signupRequestDto);
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<CommonResponseDto> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
-        try {
-            userService.login(loginRequestDto);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(400).body(new CommonResponseDto(e.getMessage(), 400));
-        }
-
-        response.setHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(loginRequestDto.getUsername()));
-        return ResponseEntity.status(200).body(new CommonResponseDto("로그인 성공", 200));
     }
 }

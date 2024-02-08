@@ -31,16 +31,4 @@ public class UserService {
         userRepository.save(user);
         return ResponseEntity.status(200).body(new CommonResponseDto("회원가입 성공", 200));
     }
-
-    public void login(LoginRequestDto loginRequestDto) {
-        String username = loginRequestDto.getUsername();
-
-        User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 유저네임입니다.")
-        );
-
-        if (!passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        }
-    }
 }
