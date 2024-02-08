@@ -1,6 +1,7 @@
 package com.sparta.newsfeed.entity;
 
 import com.sparta.newsfeed.dto.CommentRequestDto;
+import com.sparta.newsfeed.user.security.UserDetailsImpl;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,16 +27,16 @@ public class Comment extends Timestamped {
     @Column(nullable = false, length = 500)
     private String commentContent;
 
-    public Comment (CommentRequestDto requestDto){
+    public Comment (CommentRequestDto requestDto, UserDetailsImpl userDetails){
         this.postId = requestDto.getPostId();
-        this.username = requestDto.getUsername();
+        this.username = userDetails.getUsername();
         this.commentContent = requestDto.getCommentContent();
     }
 
 
-    public void update(CommentRequestDto requestDto) {
+    public void update(CommentRequestDto requestDto, UserDetailsImpl userDetails) {
         this.postId = requestDto.getPostId();
-        this.username = requestDto.getUsername();
+        this.username = userDetails.getUsername();
         this.commentContent = requestDto.getCommentContent();
     }
 }
