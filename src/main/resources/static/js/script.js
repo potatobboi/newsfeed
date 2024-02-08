@@ -45,15 +45,6 @@ function login() {
         contentType: 'application/json',
         data: JSON.stringify(data),
         success: function () {
-            alert(Cookies.get('Authorization'))
-            let auth = Cookies.get('Authorization');
-
-
-            if (auth === undefined) {
-                alert("로그인에 실패하였습니다.")
-                window.location.href = "http://localhost:8080/api/users/login-page";
-            }
-
             window.location.href = "http://localhost:8080/";
         }
     });

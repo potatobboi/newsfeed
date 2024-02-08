@@ -1,6 +1,7 @@
 package com.sparta.newsfeed.user.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sparta.newsfeed.user.dto.CommonResponseDto;
 import com.sparta.newsfeed.user.dto.LoginRequestDto;
 import com.sparta.newsfeed.user.security.UserDetailsImpl;
 import jakarta.servlet.FilterChain;
@@ -18,9 +19,11 @@ import java.io.IOException;
 @Slf4j(topic = "로그인 및 JWT 생성")
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final JwtUtil jwtUtil;
+    private final ObjectMapper objectMapper;
 
-    public JwtAuthenticationFilter(JwtUtil jwtUtil) {
+    public JwtAuthenticationFilter(JwtUtil jwtUtil, ObjectMapper objectMapper) {
         this.jwtUtil = jwtUtil;
+        this.objectMapper = objectMapper;
         setFilterProcessesUrl("/api/users/login");
     }
 
@@ -47,14 +50,21 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         log.info("로그인 성공 및 JWT 생성");
         String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
-
         String token = jwtUtil.createToken(username);
         jwtUtil.addJwtToCookie(token, response);
+
+        CommonResponseDto commonResponseDto = new CommonResponseDto("로그인 성공", 200);
+        response.setStatus(200);
+        response.setContentType("application/json; charset=UTF-8");
+        response.getWriter().write(objectMapper.writeValueAsString(commonResponseDto));
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        log.info("로그인 실패");
-        response.setStatus(401);
+        log.error("로그인 실패");
+        CommonResponseDto commonResponseDto = new CommonResponseDto("로그인 실패", 400);
+        response.setStatus(400);
+        response.setContentType("application/json; charset=UTF-8");
+        response.getWriter().write(objectMapper.writeValueAsString(commonResponseDto));
     }
 }

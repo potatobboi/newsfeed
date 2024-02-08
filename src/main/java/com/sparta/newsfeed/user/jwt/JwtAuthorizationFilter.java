@@ -1,5 +1,7 @@
 package com.sparta.newsfeed.user.jwt;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sparta.newsfeed.user.dto.CommonResponseDto;
 import com.sparta.newsfeed.user.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
@@ -23,6 +25,7 @@ import java.io.IOException;
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
+    private final ObjectMapper objectMapper;
     private final UserDetailsServiceImpl userDetailsService;
 
     @Override
@@ -37,6 +40,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
             if (!jwtUtil.validateToken(tokenValue)) {
                 log.error("Token Error");
+                CommonResponseDto commonResponseDto = new CommonResponseDto("유효하지 않은 토큰입니다.", 400);
+                res.setStatus(400);
+                res.setContentType("application/json; charset=UTF-8");
+                res.getWriter().write(objectMapper.writeValueAsString(commonResponseDto));
                 return;
             }
 
