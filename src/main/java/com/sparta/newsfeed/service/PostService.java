@@ -20,4 +20,9 @@ public class PostService {
         postRepository.save(post);
         return new PostResponseDto(post);
     }
+
+    public PostResponseDto getOnePost(Long postid) {
+        Post post = postRepository.findById(postid).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 id 입니다."));
+        return  new PostResponseDto(post);
+    }
 }
