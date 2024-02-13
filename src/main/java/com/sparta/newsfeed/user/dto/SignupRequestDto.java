@@ -16,7 +16,7 @@ public class SignupRequestDto {
     @Pattern(regexp = "[a-zA-Z0-9]{8,15}", message = "비밀번호가 형식과 다릅니다.")
     private String password;
 
-    @Pattern(regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$", message = "이메일 에러")
+    @Pattern(regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$", message = "이메일이 형식과 다릅니다.")
     private String email;
 
     @Column(nullable = false)
