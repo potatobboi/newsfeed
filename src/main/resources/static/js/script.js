@@ -1,3 +1,7 @@
+$(document).ready(function () {
+    $(`#showForEdit`).hide();
+    $(`#showForEditPassword`).hide();
+})
 function signup() {
     let username = $('#username').val();
     let password = $('#password').val();
@@ -77,6 +81,62 @@ function sendVerifyEmail() {
         data: JSON.stringify(data),
         success: function (response) {
             alert(response.message);
+        },
+        error: function (xhr, status, error) {
+            var errorMessage = xhr.responseJSON.message;
+            alert(errorMessage);
+        }
+    });
+}
+
+function editInfo() {
+    $(`#showForEdit`).show();
+}
+function editPassword() {
+    $(`#showForEditPassword`).show();
+}
+function submitinfo() {
+    let editinfo = $('#editinfo').val();
+
+    // 전송할 데이터 객체 생성
+    let data = {
+        'info': editinfo
+    };
+
+    // AJAX를 사용하여 서버에 POST 요청 보내기
+    $.ajax({
+        type: 'PUT',
+        url: '/api/users',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function () {
+            window.location.reload();
+        },
+        error: function (xhr, status, error) {
+            alert("수정에러 발생");
+        }
+    });
+}
+
+function submitEditPassword() {
+    let prePassword = $('#prePassword').val();
+    let postPassword = $('#postPassword').val();
+
+    // 전송할 데이터 객체 생성
+    let data = {
+        'prePassword': prePassword,
+        'postPassword': postPassword
+    };
+
+    // AJAX를 사용하여 서버에 POST 요청 보내기
+    $.ajax({
+        type: 'PATCH',
+        url: '/api/users/password',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) {
+            alert(response.message);
+            window.location.reload();
         },
         error: function (xhr, status, error) {
             var errorMessage = xhr.responseJSON.message;
