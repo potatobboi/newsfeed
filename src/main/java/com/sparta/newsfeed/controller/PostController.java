@@ -3,11 +3,15 @@ package com.sparta.newsfeed.controller;
 import com.sparta.newsfeed.dto.PostRequsetDto;
 import com.sparta.newsfeed.dto.PostResponseDto;
 import com.sparta.newsfeed.service.PostService;
+import com.sparta.newsfeed.user.security.UserDetailsImpl;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/posts")
 public class PostController {
 
@@ -18,17 +22,26 @@ public class PostController {
 
     //게시물 생성
     @PostMapping("/create")
-    public PostResponseDto createPost(@RequestBody PostRequsetDto requsetDto){
-        return postService.createPost(requsetDto);
+    public String createPost(@RequestBody PostRequsetDto requsetDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        postService.createPost(requsetDto, userDetails);
+        return "redirect:/api/posts";
+    }
+
+    //작성자별 게시물 조회
+    @GetMapping("/{userid}")
+    public List<PostResponseDto> getPostsByUsername(@PathVariable Long userid, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return postService.getPostsByUsername(userid, userDetails);
     }
 
     //게시물 1건 조회
-    @GetMapping("/{postid}")
+    @ResponseBody
+    @GetMapping("/postid/{postid}")
     public PostResponseDto getOnePost(@PathVariable Long postid){
         return postService.getOnePost(postid);
     }
 
     //게시물 전체 조회
+    @ResponseBody
     @GetMapping
     public List<PostResponseDto> getAllPost(){
         return postService.getAllPost();
@@ -36,13 +49,16 @@ public class PostController {
 
     //게시물 수정
     @PutMapping("/{postid}")
-    public PostResponseDto updatePost(@PathVariable Long postid, @RequestBody PostRequsetDto requsetDto){
-        return postService.updatePost(postid, requsetDto);
+    public String updatePost(@PathVariable Long postid, @RequestBody PostRequsetDto requsetDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        postService.updatePost(postid, requsetDto, userDetails);
+        return "redirect:/api/posts";
     }
 
     //게시물 삭제
+    @ResponseBody
     @DeleteMapping("/{postid}")
-    public void deletePost(@PathVariable Long postid){
-        postService.deletePost(postid);
+    public String deletePost(@PathVariable Long postid, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        postService.deletePost(postid, userDetails);
+        return "redirect:/api/posts";
     }
 }
