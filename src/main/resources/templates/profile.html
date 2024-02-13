@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로필 관리</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script defer src="/js/script.js"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+</head>
+<body>
+<header>
+    <h1><a href="http://localhost:8080/">오운식뭐</a></h1> <!-- Header with link to index page -->
+</header>
+
+<div id="profile-info">
+    <p id="username" th:text="${username}">username</p> <!-- Paragraph for displaying username -->
+    <p id="info" th:text="${info}">info</p> <!-- Paragraph for displaying info data -->
+</div>
+
+<div id="buttons">
+    <button onclick="editInfo()">한줄 소개 수정</button> <!-- Button for editing info -->
+    <div id="showForEdit">
+        <label for="editinfo">한줄소개:</label> <!-- Label for password input -->
+        <input type="text" id="editinfo" name="editinfo" required><br><br> <!-- Password input -->
+
+        <button type="submit" onclick="submitinfo()">한줄소개 수정하기</button> <!-- Submit button for form -->
+    </div>
+    <button onclick="editPassword()">비밀번호 수정</button> <!-- Button for editing password -->
+    <div id="showForEditPassword">
+        <label for="prePassword">이전 비밀번호:</label> <!-- Label for password input -->
+        <input type="text" id="prePassword" name="prePassword" required><br><br>
+        <label for="postPassword">바꿀 비밀번호:</label> <!-- Label for password input -->
+        <input type="text" id="postPassword" name="postPassword" required><br><br> <!-- Password input -->
+
+        <button type="submit" onclick="submitEditPassword()">한줄소개 수정하기</button> <!-- Submit button for form -->
+    </div>
+</div>
+</body>
+</html>
