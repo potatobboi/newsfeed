@@ -27,7 +27,7 @@ public class PostController {
         return "redirect:/api/posts";
     }
 
-    //작성자별 게시물 조회
+    //작성자의 전체 게시물 조회
     @ResponseBody
     @GetMapping("/userId/{userId}")
     public List<PostResponseDto> getPostsByUserId(@PathVariable Long userId, @AuthenticationPrincipal UserDetailsImpl userDetails){

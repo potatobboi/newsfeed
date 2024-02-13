@@ -61,6 +61,7 @@ public class PostService {
     }
 
     //게시물 삭제
+    @Transactional
     public void deletePost(Long postid, UserDetailsImpl userDetails) {
         Post post = postRepository.findById(postid).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 id 입니다."));
 
@@ -71,7 +72,7 @@ public class PostService {
         postRepository.delete(post);
     }
 
-    //회원별 게시물 조회
+    //작성자의 전체 게시물 조회
     public List<PostResponseDto> getPostsByUserId(Long userId, UserDetailsImpl userDetails) {
         if(!userId.equals(userDetails.getUser().getId())){
             throw new RejectedExecutionException("가입된 유저가 아닙니다.");
