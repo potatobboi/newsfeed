@@ -3,9 +3,11 @@ package com.sparta.newsfeed.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "recommends")
 @NoArgsConstructor
 public class Recommend {
