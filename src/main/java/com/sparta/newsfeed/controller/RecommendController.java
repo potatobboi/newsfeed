@@ -1,5 +1,6 @@
 package com.sparta.newsfeed.controller;
 
+import com.sparta.newsfeed.dto.RecommendRequestDto;
 import com.sparta.newsfeed.service.RecommendService;
 import com.sparta.newsfeed.user.security.UserDetailsImpl;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,13 +22,14 @@ public class RecommendController {
     }
 
     @PostMapping("/create") // 추천 생성하기
-    public Long createRecommend(@RequestBody Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return recommendService.createRecommend(postId, userDetails);
+    public Long createRecommend(@RequestBody RecommendRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        System.out.println(userDetails.getUsername());
+        return recommendService.createRecommend(requestDto, userDetails);
     }
 
     @DeleteMapping("/delete") // 추천 삭제하기
-    public Long deleteRecommend(@RequestBody Long postId,@AuthenticationPrincipal UserDetailsImpl userDetails){
-        return recommendService.deleteRecommend(postId, userDetails);
+    public Long deleteRecommend(@RequestBody RecommendRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return recommendService.deleteRecommend(requestDto, userDetails);
     }
 
 

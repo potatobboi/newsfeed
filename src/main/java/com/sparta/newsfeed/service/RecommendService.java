@@ -1,5 +1,6 @@
 package com.sparta.newsfeed.service;
 
+import com.sparta.newsfeed.dto.RecommendRequestDto;
 import com.sparta.newsfeed.entity.Recommend;
 import com.sparta.newsfeed.repository.RecommendRepository;
 import com.sparta.newsfeed.user.security.UserDetailsImpl;
@@ -14,8 +15,9 @@ public class RecommendService {
         this.recommendRepository = recommendRepository;
     }
 
-    public Long createRecommend(Long postId, UserDetailsImpl userDetails) { // 추천 생성
+    public Long createRecommend(RecommendRequestDto requestDto, UserDetailsImpl userDetails) { // 추천 생성
         //if(작성자인지 확인하는 로직) return countByPostId(postId); 추가 필요함
+        Long postId = requestDto.getPostId();
         if(!existsByPostIdAndRecommender(postId,userDetails.getUsername())){ // 추천이 존재하지 않을경우 추천 생성
             Recommend recommend = new Recommend(postId, userDetails.getUsername());
             recommendRepository.save(recommend);
@@ -23,7 +25,8 @@ public class RecommendService {
         return countByPostId(postId);
     }
 
-    public Long deleteRecommend(Long postId, UserDetailsImpl userDetails) {//추천 삭제
+    public Long deleteRecommend(RecommendRequestDto requestDto, UserDetailsImpl userDetails) {//추천 삭제
+        Long postId = requestDto.getPostId();
        if(existsByPostIdAndRecommender(postId, userDetails.getUsername())){//추천이 존재할 경우에만 삭제
            Recommend recommend = findRecommend(postId, userDetails.getUsername());
            recommendRepository.delete(recommend);
