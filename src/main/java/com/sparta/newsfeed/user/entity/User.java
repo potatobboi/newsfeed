@@ -26,9 +26,13 @@ public class User {
     @Column
     private String info;
 
+    @Column(nullable = false, unique = true)
+    private String email;
+
     public User(SignupRequestDto signupRequestDto, String encodedPassword) {
         this.username = signupRequestDto.getUsername();
         this.password = encodedPassword;
+        this.email = signupRequestDto.getEmail();
 
         if(info == null){
             info = signupRequestDto.getInfo();
