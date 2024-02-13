@@ -5,6 +5,8 @@ import com.sparta.newsfeed.dto.PostResponseDto;
 import com.sparta.newsfeed.service.PostService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
@@ -24,6 +26,12 @@ public class PostController {
     @GetMapping("/{postid}")
     public PostResponseDto getOnePost(@PathVariable Long postid){
         return postService.getOnePost(postid);
+    }
+
+    //게시물 전체 조회
+    @GetMapping
+    public List<PostResponseDto> getAllPost(){
+        return postService.getAllPost();
     }
 
     //게시물 수정
