@@ -28,16 +28,17 @@ public class PostController {
     }
 
     //작성자별 게시물 조회
-    @GetMapping("/{userid}")
-    public List<PostResponseDto> getPostsByUsername(@PathVariable Long userid, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return postService.getPostsByUsername(userid, userDetails);
+    @ResponseBody
+    @GetMapping("/userId/{userId}")
+    public List<PostResponseDto> getPostsByUserId(@PathVariable Long userId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return postService.getPostsByUserId(userId, userDetails);
     }
 
     //게시물 1건 조회
     @ResponseBody
-    @GetMapping("/postid/{postid}")
-    public PostResponseDto getOnePost(@PathVariable Long postid){
-        return postService.getOnePost(postid);
+    @GetMapping("/postId/{postId}")
+    public PostResponseDto getOnePost(@PathVariable Long postId){
+        return postService.getOnePost(postId);
     }
 
     //게시물 전체 조회
@@ -55,7 +56,6 @@ public class PostController {
     }
 
     //게시물 삭제
-    @ResponseBody
     @DeleteMapping("/{postid}")
     public String deletePost(@PathVariable Long postid, @AuthenticationPrincipal UserDetailsImpl userDetails){
         postService.deletePost(postid, userDetails);

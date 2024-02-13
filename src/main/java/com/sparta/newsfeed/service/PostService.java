@@ -67,17 +67,16 @@ public class PostService {
         if(!userDetails.getUsername().equals(post.getUsername())){
             throw new RejectedExecutionException("게시물의 작성자만 삭제가 가능합니다.");
         }
-        commentService.deleteCommentByPostId(post.getId());
+        commentService.deleteCommentByPostId(postid);
         postRepository.delete(post);
     }
 
     //회원별 게시물 조회
-    public List<PostResponseDto> getPostsByUsername(Long userid, UserDetailsImpl userDetails) {
-        String username = null;
-        if (userid.equals(userDetails.getUser().getId())) {
-            username = userDetails.getUser().getUsername();
+    public List<PostResponseDto> getPostsByUserId(Long userId, UserDetailsImpl userDetails) {
+        if(!userId.equals(userDetails.getUser().getId())){
+            throw new RejectedExecutionException("가입된 유저가 아닙니다.");
         }
-        List<Post> posts = postRepository.findByUsername(username);
+        List<Post> posts = postRepository.findByUserId(userId);
         List<PostResponseDto> responseDtoList = new ArrayList<>();
 
         for (Post post : posts) {
