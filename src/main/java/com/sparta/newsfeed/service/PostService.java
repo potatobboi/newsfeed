@@ -19,9 +19,12 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final CommentService commentService;
-    public PostService(PostRepository postRepository, CommentService commentService) {
+    private final RecommendService recommendService;
+
+    public PostService(PostRepository postRepository, CommentService commentService, RecommendService recommendService) {
         this.postRepository = postRepository;
         this.commentService = commentService;
+        this.recommendService = recommendService;
     }
 
     //게시물 생성
@@ -69,6 +72,7 @@ public class PostService {
             throw new RejectedExecutionException("게시물의 작성자만 삭제가 가능합니다.");
         }
         commentService.deleteCommentByPostId(postid);
+        recommendService.deleteByPostId(postid);
         postRepository.delete(post);
     }
 
@@ -86,4 +90,5 @@ public class PostService {
 
         return responseDtoList;
     }
+
 }
