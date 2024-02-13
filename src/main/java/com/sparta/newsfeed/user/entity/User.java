@@ -38,4 +38,14 @@ public class User {
             info = signupRequestDto.getInfo();
         }
     }
+
+    // 프로필 수정
+    public void update(String info) {
+        this.info = info;
+    }
+
+    // 비밀번호 수정
+    public void updatePassword(String postPassword) {
+        this.password = postPassword;
+    }
 }
