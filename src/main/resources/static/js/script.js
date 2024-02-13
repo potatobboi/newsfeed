@@ -1,12 +1,20 @@
-function submitForm() {
+$(document).ready(function () {
+    $(`#showForEdit`).hide();
+    $(`#showForEditPassword`).hide();
+})
+function signup() {
     let username = $('#username').val();
     let password = $('#password').val();
+    let email = $('#email').val();
+    let encodedEmail = $('#encodedEmail').val();
     let info = $('#info').val();
 
     // 전송할 데이터 객체 생성
     let data = {
         'username': username,
         'password': password,
+        'email': email,
+        'encodedEmail': encodedEmail,
         'info': info
     };
 
@@ -18,12 +26,13 @@ function submitForm() {
         data: JSON.stringify(data),
         success: function (response) {
             alert(response.message);
+            window.location.href = 'http://localhost:8080/api/users/login-page';
+        },
+        error: function (xhr, status, error) {
+            var errorMessage = xhr.responseJSON.message;
+            alert(errorMessage);
+            window.location.reload();
 
-            if (response.statusCode === 200) {
-                window.location.href =  'http://localhost:8080/api/users/login-page';
-            } else {
-                window.location.reload();
-            }
         }
     });
 }
@@ -46,6 +55,92 @@ function login() {
         data: JSON.stringify(data),
         success: function () {
             window.location.href = "http://localhost:8080/";
+        },
+        error: function (xhr, status, error) {
+            var errorMessage = xhr.responseJSON.message;
+            alert(errorMessage);
+            window.location.reload();
+
+        }
+    });
+}
+
+function sendVerifyEmail() {
+    let receiverEmail = $('#email').val();
+
+    // 전송할 데이터 객체 생성
+    let data = {
+        'receiverEmail': receiverEmail
+    };
+
+    // AJAX를 사용하여 서버에 POST 요청 보내기
+    $.ajax({
+        type: 'POST',
+        url: '/api/users/mails',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) {
+            alert(response.message);
+        },
+        error: function (xhr, status, error) {
+            var errorMessage = xhr.responseJSON.message;
+            alert(errorMessage);
+        }
+    });
+}
+
+function editInfo() {
+    $(`#showForEdit`).show();
+}
+function editPassword() {
+    $(`#showForEditPassword`).show();
+}
+function submitinfo() {
+    let editinfo = $('#editinfo').val();
+
+    // 전송할 데이터 객체 생성
+    let data = {
+        'info': editinfo
+    };
+
+    // AJAX를 사용하여 서버에 POST 요청 보내기
+    $.ajax({
+        type: 'PUT',
+        url: '/api/users',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function () {
+            window.location.reload();
+        },
+        error: function (xhr, status, error) {
+            alert("수정에러 발생");
+        }
+    });
+}
+
+function submitEditPassword() {
+    let prePassword = $('#prePassword').val();
+    let postPassword = $('#postPassword').val();
+
+    // 전송할 데이터 객체 생성
+    let data = {
+        'prePassword': prePassword,
+        'postPassword': postPassword
+    };
+
+    // AJAX를 사용하여 서버에 POST 요청 보내기
+    $.ajax({
+        type: 'PATCH',
+        url: '/api/users/password',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) {
+            alert(response.message);
+            window.location.reload();
+        },
+        error: function (xhr, status, error) {
+            var errorMessage = xhr.responseJSON.message;
+            alert(errorMessage);
         }
     });
 }

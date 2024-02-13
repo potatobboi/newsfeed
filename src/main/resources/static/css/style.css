@@ -1,41 +1,62 @@
+/* Common styles */
 body {
-    background-color: #FFE5E5; /* 연한 살구색 배경 */
     font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
 }
 
-form {
-    max-width: 400px;
-    margin: 20px auto;
+header {
+    background-color: #ff0000; /* Strong red background for header */
+    color: white;
     padding: 20px;
-    background-color: #FFF; /* 흰색 배경 */
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#signup-form,
+#login-form {
+    width: 300px;
+    margin: 50px auto; /* Center aligning the form */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
 }
 
 label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
-input {
+input[type="text"],
+input[type="password"],
+input[type="email"],
+button[type="submit"],
+button[type="button"] {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 16px;
-    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
-button {
-    background-color: #FF6B6B; /* 진한 살구색 버튼 */
-    color: #FFF; /* 흰색 텍스트 */
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
+button[type="submit"],
+button[type="button"] {
+    background-color: #ff0000; /* Strong red background for buttons */
+    color: white;
     cursor: pointer;
-    font-size: 16px;
 }
 
-button:hover {
-    background-color: #FF4D4D; /* 더 진한 살구색으로 호버 효과 */
+button[type="submit"]:hover,
+button[type="button"]:hover {
+    background-color: #cc0000; /* Darker red on hover */
 }

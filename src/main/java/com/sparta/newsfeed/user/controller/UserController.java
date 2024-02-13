@@ -37,16 +37,21 @@ public class UserController {
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
 
         if (!fieldErrors.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
 
             for (FieldError fieldError : fieldErrors) {
-                log.error(fieldError.getField() + " 필드 : " + fieldError.getDefaultMessage());
+                sb.append("\n").append(fieldError.getDefaultMessage());
             }
 
-            return ResponseEntity.status(400).body(new CommonResponseDto("회원가입 실패", 400));
-
+            return ResponseEntity.status(400).body(new CommonResponseDto(sb.toString(), 400));
         }
 
-        return userService.createUser(signupRequestDto);
+        try {
+            userService.createUser(signupRequestDto);
+            return ResponseEntity.status(200).body(new CommonResponseDto("회원가입 성공", 200));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(400).body(new CommonResponseDto(e.getMessage(), 200));
+        }
     }
 
     @GetMapping // 프로필 조회
