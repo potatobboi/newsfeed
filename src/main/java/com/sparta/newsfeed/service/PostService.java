@@ -5,6 +5,7 @@ import com.sparta.newsfeed.dto.PostResponseDto;
 import com.sparta.newsfeed.entity.Post;
 import com.sparta.newsfeed.repository.PostRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PostService {
@@ -23,6 +24,14 @@ public class PostService {
 
     public PostResponseDto getOnePost(Long postid) {
         Post post = postRepository.findById(postid).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 id 입니다."));
-        return  new PostResponseDto(post);
+        return new PostResponseDto(post);
+    }
+
+    //게시물 수정
+    @Transactional
+    public PostResponseDto updatePost(Long postid, PostRequsetDto requsetDto) {
+        Post post = postRepository.findById(postid).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 id 입니다."));
+        post.update(requsetDto);
+        return new PostResponseDto(post);
     }
 }

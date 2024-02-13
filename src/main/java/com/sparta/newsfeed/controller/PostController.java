@@ -26,4 +26,9 @@ public class PostController {
         return postService.getOnePost(postid);
     }
 
+    //게시물 수정
+    @PutMapping("/{postid}")
+    public PostResponseDto updatePost(@PathVariable Long postid, @RequestBody PostRequsetDto requsetDto){
+        return postService.updatePost(postid, requsetDto);
+    }
 }

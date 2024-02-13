@@ -28,4 +28,8 @@ public class Post extends TimeEntity{
         this.content = requsetDto.getContent();
     }
 
+    public void update(PostRequsetDto requsetDto) {
+        this.title = requsetDto.getTitle();
+        this.content = requsetDto.getContent();
+    }
 }
