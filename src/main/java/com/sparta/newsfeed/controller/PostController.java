@@ -31,4 +31,10 @@ public class PostController {
     public PostResponseDto updatePost(@PathVariable Long postid, @RequestBody PostRequsetDto requsetDto){
         return postService.updatePost(postid, requsetDto);
     }
+
+    //게시물 삭제
+    @DeleteMapping("/{postid}")
+    public void deletePost(@PathVariable Long postid){
+        postService.deletePost(postid);
+    }
 }

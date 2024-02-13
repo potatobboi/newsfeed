@@ -34,4 +34,10 @@ public class PostService {
         post.update(requsetDto);
         return new PostResponseDto(post);
     }
+
+    //게시물 삭제
+    public void deletePost(Long postid) {
+        Post post = postRepository.findById(postid).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 id 입니다."));
+        postRepository.delete(post);
+    }
 }
