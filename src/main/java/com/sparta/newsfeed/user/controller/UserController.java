@@ -1,19 +1,17 @@
 package com.sparta.newsfeed.user.controller;
 
-import com.sparta.newsfeed.user.dto.CommonResponseDto;
-import com.sparta.newsfeed.user.dto.SignupRequestDto;
+import com.sparta.newsfeed.user.dto.*;
+import com.sparta.newsfeed.user.security.UserDetailsImpl;
 import com.sparta.newsfeed.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -49,5 +47,28 @@ public class UserController {
         }
 
         return userService.createUser(signupRequestDto);
+    }
+
+    @GetMapping // 프로필 조회
+    public ResponseEntity<UserInfoDto> getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        String username = userDetails.getUser().getUsername();
+        String info = userDetails.getUser().getInfo();
+
+        return ResponseEntity.ok(new UserInfoDto(username, info));
+    }
+
+    @PutMapping // 프로필 수정
+    public ResponseEntity<UserInfoDto> updateUserInfo(@RequestBody UpdateUserDto updateUserDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        UserInfoDto userInfoDto = userService.updateUserInfo(updateUserDto, userDetails.getUser().getUsername());
+
+        return ResponseEntity.ok(userInfoDto);
+    }
+
+    @PatchMapping("/password") // 비밀번호 수정
+    public ResponseEntity<CommonResponseDto> updatePassword(@RequestBody UpdatePasswordDto updatePasswordDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        CommonResponseDto commonResponseDto = userService.updatePassword(updatePasswordDto, userDetails.getUser().getUsername());
+
+
+        return ResponseEntity.ok(commonResponseDto);
     }
 }
