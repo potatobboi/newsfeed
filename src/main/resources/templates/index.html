@@ -6,6 +6,19 @@
   <title>홈</title>
 
   <link rel="stylesheet" href="/css/style.css">
+  <script defer src="/js/script.js"></script>
+
+
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+          integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      getPosts()
+    })
+
+  </script>
 </head>
 <body>
 <header>
@@ -13,5 +26,11 @@
   <a href="login.html">로그인</a> <!-- Link to login page -->
   <a href="signup.html">회원가입</a> <!-- Link to signup page -->
 </header>
+<div id="detail-box">
+
+</div>
+<div id="cards-box">
+
+</div>
 </body>
 </html>
