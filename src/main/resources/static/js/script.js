@@ -68,6 +68,37 @@ function addHtml(id, username, title) {
 
 function showDetails(id) {
     $('#detail-box').empty();
+    let recommnedCount;
+    let state;
+    $.ajax({
+        type: 'GET',
+        url: `/api/recommends?postId=${id}`,
+        contentType: 'application/json',
+        async: false,
+        success: function (response) {
+            recommnedCount = response;
+            console.log(recommnedCount);
+        },
+        error: function (xhr, status, error) {
+            var errorMessage = xhr.responseJSON.message;
+            alert(errorMessage);
+        }
+    });
+    $.ajax({
+        type: 'GET',
+        url: `/api/recommends/getstate?postId=${id}`,
+        contentType: 'application/json',
+        async: false,
+        success: function (response) {
+            state = response;
+            console.log(state);
+        },
+        error: function (xhr, status, error) {
+            state = false;
+            var errorMessage = xhr.responseJSON.message;
+            alert(errorMessage);
+        }
+    });
     $.ajax({
         type: 'GET',
         url: `/api/posts/postId/${id}`,
@@ -78,7 +109,8 @@ function showDetails(id) {
             let title = response['title'];
             let username = response['username']
             let content = response['content'];
-            addHtmlDetails(id, modifiedDate, title, username, content);
+            console.log(recommnedCount);
+            addHtmlDetails(id, modifiedDate, title, username, content, recommnedCount, state);
         },
         error: function (xhr, status, error) {
             var errorMessage = xhr.responseJSON.message;
@@ -87,13 +119,17 @@ function showDetails(id) {
     });
 }
 
-function addHtmlDetails(id, modifiedDate, title, username, content) {
+function addHtmlDetails(id, modifiedDate, title, username, content, recommnedCount, state) {
     let tempHtml =
         `<div class="card">
             <p>${username}</p>
             <p>${modifiedDate}</p>
             <h1>${title}</h1>
             <h2>${content}</h2>
+            <div>
+                <h1>${recommnedCount}</h1>
+                <button ${state ? 'hidden' : ''} onclick="recommendation()">추천하기</button>
+            </div>
             <button id="${id}-edit" onclick="editPost()">수정</button>
             <div id="showForEdit">
 
@@ -409,4 +445,24 @@ function submitEditPassword() {
             alert(errorMessage);
         }
     });
+}
+
+function getRecommend(postid){
+    $.ajax({
+        type: 'GET',
+        url: `/api/recommends?postId=${postid}`,
+        contentType: 'application/json',
+        success: function (response) {
+            console.log(response)
+        },
+        error: function (xhr, status, error) {
+            var errorMessage = xhr.responseJSON.message;
+            alert(errorMessage);
+        }
+    });
+
+}
+function recommendation(){
+    console.log("함수 실행됨");
+
 }

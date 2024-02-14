@@ -64,4 +64,9 @@ public class RecommendService {
         Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 postId 입니다."));
         return username.equals(post.getUsername());
     }
+
+    public boolean recommendState(Long postId, UserDetailsImpl userDetails){
+        String username = userDetails.getUsername();
+        return (!existsByPostIdAndRecommender(postId, username) && !checkWriter(postId, username));
+    }
 }
