@@ -1,8 +1,8 @@
-package com.sparta.newsfeed.user.controller;
+package com.sparta.newsfeed.controller;
 
-import com.sparta.newsfeed.user.dto.CommonResponseDto;
-import com.sparta.newsfeed.user.dto.MailRequestDto;
-import com.sparta.newsfeed.user.service.MailService;
+import com.sparta.newsfeed.dto.CommonResponseDto;
+import com.sparta.newsfeed.dto.MailRequestDto;
+import com.sparta.newsfeed.service.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

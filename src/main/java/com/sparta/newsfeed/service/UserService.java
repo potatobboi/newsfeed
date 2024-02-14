@@ -1,12 +1,14 @@
-package com.sparta.newsfeed.user.service;
+package com.sparta.newsfeed.service;
 
-import com.sparta.newsfeed.user.dto.*;
-import com.sparta.newsfeed.user.entity.Mail;
-import com.sparta.newsfeed.user.entity.User;
-import com.sparta.newsfeed.user.repository.MailRepository;
-import com.sparta.newsfeed.user.repository.UserRepository;
+import com.sparta.newsfeed.dto.SignupRequestDto;
+import com.sparta.newsfeed.dto.UpdatePasswordDto;
+import com.sparta.newsfeed.dto.UpdateUserDto;
+import com.sparta.newsfeed.dto.UserInfoDto;
+import com.sparta.newsfeed.entity.Mail;
+import com.sparta.newsfeed.entity.User;
+import com.sparta.newsfeed.repository.MailRepository;
+import com.sparta.newsfeed.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +54,7 @@ public class UserService {
     }
 
     @Transactional // 비밀번호 수정
-    public CommonResponseDto updatePassword(UpdatePasswordDto updatePasswordDto, String username) {
+    public void updatePassword(UpdatePasswordDto updatePasswordDto, String username) {
         User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("회원정보가 없습니다."));
 
@@ -62,7 +64,5 @@ public class UserService {
 
         String encodedPassword = passwordEncoder.encode(updatePasswordDto.getPostPassword());
         user.updatePassword(encodedPassword);
-
-        return new CommonResponseDto("비밀번호 수정 성공", 200);
     }
 }

@@ -1,9 +1,9 @@
-package com.sparta.newsfeed.user.jwt;
+package com.sparta.newsfeed.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.newsfeed.user.dto.CommonResponseDto;
-import com.sparta.newsfeed.user.dto.LoginRequestDto;
-import com.sparta.newsfeed.user.security.UserDetailsImpl;
+import com.sparta.newsfeed.dto.CommonResponseDto;
+import com.sparta.newsfeed.dto.LoginRequestDto;
+import com.sparta.newsfeed.security.UserDetailsImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,6 +1,6 @@
-package com.sparta.newsfeed.user.security;
+package com.sparta.newsfeed.security;
 
-import com.sparta.newsfeed.user.entity.User;
+import com.sparta.newsfeed.entity.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

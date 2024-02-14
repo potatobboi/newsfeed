@@ -5,7 +5,7 @@ import com.sparta.newsfeed.entity.Post;
 import com.sparta.newsfeed.entity.Recommend;
 import com.sparta.newsfeed.repository.PostRepository;
 import com.sparta.newsfeed.repository.RecommendRepository;
-import com.sparta.newsfeed.user.security.UserDetailsImpl;
+import com.sparta.newsfeed.security.UserDetailsImpl;
 import org.springframework.stereotype.Service;
 
 @Service

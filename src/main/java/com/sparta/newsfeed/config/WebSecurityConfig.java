@@ -1,10 +1,10 @@
-package com.sparta.newsfeed.user.config;
+package com.sparta.newsfeed.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.newsfeed.user.jwt.JwtAuthenticationFilter;
-import com.sparta.newsfeed.user.jwt.JwtAuthorizationFilter;
-import com.sparta.newsfeed.user.jwt.JwtUtil;
-import com.sparta.newsfeed.user.security.UserDetailsServiceImpl;
+import com.sparta.newsfeed.jwt.JwtAuthenticationFilter;
+import com.sparta.newsfeed.jwt.JwtAuthorizationFilter;
+import com.sparta.newsfeed.jwt.JwtUtil;
+import com.sparta.newsfeed.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -66,8 +66,10 @@ public class WebSecurityConfig {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
                         .requestMatchers("/api/users/**").permitAll() // '/api/user/'로 시작하는 요청 모두 접근 허가
                         .requestMatchers("/api/posts").permitAll()
+                        .requestMatchers("/api/posts/postId/**").permitAll()
                         .requestMatchers("/api/comments").permitAll()
                         .requestMatchers("/api/recommends").permitAll()
+                        .requestMatchers("/").permitAll()
                         .anyRequest().authenticated() // 그 외 모든 요청 인증처리
         );
 

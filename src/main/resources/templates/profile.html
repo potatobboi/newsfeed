@@ -13,6 +13,36 @@
             integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(`#showForEdit`).hide();
+            $(`#showForEditPassword`).hide();
+            const auth = getToken();
+            if (auth === '') {
+                alert("로그인을 하세요")
+                window.location.href = 'http://localhost:8080/api/users/login-page';
+            } else {
+                $.ajax({
+                    type: 'GET',
+                    url: `/api/users`,
+                    contentType: 'application/json',
+                    success: function (response) {
+                        let username = response['username'];
+                        let info = response['info'];
+                        let tempHtml = `
+                            <p id="username">${username}</p> <!-- Paragraph for displaying username -->
+                            <p id="info">${info}</p> <!-- Paragraph for displaying info data -->
+                        `
+                        $('#profile-info').append(tempHtml);
+                    },
+                    error: function (xhr, status, error) {
+                        var errorMessage = xhr.responseJSON.message;
+                        alert(errorMessage);
+                    }
+                });
+            }
+        })
+    </script>
 </head>
 <body>
 <header>
@@ -20,8 +50,7 @@
 </header>
 
 <div id="profile-info">
-    <p id="username" th:text="${username}">username</p> <!-- Paragraph for displaying username -->
-    <p id="info" th:text="${info}">info</p> <!-- Paragraph for displaying info data -->
+
 </div>
 
 <div id="buttons">
@@ -29,7 +58,6 @@
     <div id="showForEdit">
         <label for="editinfo">한줄소개:</label> <!-- Label for password input -->
         <input type="text" id="editinfo" name="editinfo" required><br><br> <!-- Password input -->
-
         <button type="submit" onclick="submitinfo()">한줄소개 수정하기</button> <!-- Submit button for form -->
     </div>
     <button onclick="editPassword()">비밀번호 수정</button> <!-- Button for editing password -->

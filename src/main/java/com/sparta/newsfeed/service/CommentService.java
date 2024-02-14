@@ -4,7 +4,7 @@ import com.sparta.newsfeed.dto.CommentRequestDto;
 import com.sparta.newsfeed.dto.CommentResponseDto;
 import com.sparta.newsfeed.entity.Comment;
 import com.sparta.newsfeed.repository.CommentRepository;
-import com.sparta.newsfeed.user.security.UserDetailsImpl;
+import com.sparta.newsfeed.security.UserDetailsImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

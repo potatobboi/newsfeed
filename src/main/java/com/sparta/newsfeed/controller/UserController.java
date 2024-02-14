@@ -1,16 +1,18 @@
-package com.sparta.newsfeed.user.controller;
+package com.sparta.newsfeed.controller;
 
-import com.sparta.newsfeed.user.dto.*;
-import com.sparta.newsfeed.user.security.UserDetailsImpl;
-import com.sparta.newsfeed.user.service.UserService;
+import com.sparta.newsfeed.dto.*;
+import com.sparta.newsfeed.security.UserDetailsImpl;
+import com.sparta.newsfeed.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +32,11 @@ public class UserController {
     @GetMapping("/login-page")
     public String loginPage() {
         return "login";
+    }
+
+    @GetMapping("/profile")
+    public String profilePage() {
+        return "profile";
     }
 
     @PostMapping("/signup")
@@ -70,10 +77,30 @@ public class UserController {
     }
 
     @PatchMapping("/password") // 비밀번호 수정
-    public ResponseEntity<CommonResponseDto> updatePassword(@RequestBody UpdatePasswordDto updatePasswordDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        CommonResponseDto commonResponseDto = userService.updatePassword(updatePasswordDto, userDetails.getUser().getUsername());
+    public ResponseEntity<CommonResponseDto> updatePassword(@RequestBody @Valid UpdatePasswordDto updatePasswordDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+            userService.updatePassword(updatePasswordDto, userDetails.getUser().getUsername());
 
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new CommonResponseDto("비밀번호 수정 성공", HttpStatus.OK.value()));
+    }
 
-        return ResponseEntity.ok(commonResponseDto);
+    @ExceptionHandler(IllegalArgumentException.class) // IllegalArgumentException 핸들러
+    public ResponseEntity<ExceptionDto> IllegalArgumentException(IllegalArgumentException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ExceptionDto.builder()
+                        .statusCode(HttpStatus.BAD_REQUEST.value())
+                        .state(HttpStatus.BAD_REQUEST)
+                        .message(e.getMessage())
+                        .build());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class) // 비밀번호 예외처리 핸들러
+    public ResponseEntity<ExceptionDto> MethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ExceptionDto.builder()
+                        .statusCode(HttpStatus.BAD_REQUEST.value())
+                        .state(HttpStatus.BAD_REQUEST)
+                        .message(e.getMessage())
+                        .build());
     }
 }

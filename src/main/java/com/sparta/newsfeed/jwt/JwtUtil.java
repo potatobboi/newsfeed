@@ -1,4 +1,4 @@
-package com.sparta.newsfeed.user.jwt;
+package com.sparta.newsfeed.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
