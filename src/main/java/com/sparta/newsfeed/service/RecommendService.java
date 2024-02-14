@@ -67,6 +67,7 @@ public class RecommendService {
 
     public boolean recommendState(Long postId, UserDetailsImpl userDetails){
         String username = userDetails.getUsername();
+        System.out.println(username);
         return (!existsByPostIdAndRecommender(postId, username) && !checkWriter(postId, username));
     }
 }
