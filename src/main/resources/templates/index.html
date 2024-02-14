@@ -26,6 +26,16 @@
   <a href="login.html">로그인</a> <!-- Link to login page -->
   <a href="signup.html">회원가입</a> <!-- Link to signup page -->
 </header>
+<div id="create-box">
+
+  <label for="createTitle">제목:</label> <!-- Label for password input -->
+  <input type="text" id="createTitle" name="createTitle" required><br><br> <!-- Password input -->
+
+  <label for="createContent">내용:</label> <!-- Label for password input -->
+  <input type="text" id="createContent" name="createContent" required><br><br> <!-- Password input -->
+
+  <button type="submit" onclick="submitPost('${id}')">작성완료</button>
+</div>
 <div id="detail-box">
 
 </div>

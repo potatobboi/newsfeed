@@ -1,3 +1,27 @@
+function submitPost(id) {
+    let title = $('#createTitle').val();
+    let content = $('#createContent').val();
+
+    // 전송할 데이터 객체 생성
+    let data = {
+        'title': title,
+        'content': content,
+    };
+    // AJAX를 사용하여 서버에 POST 요청 보내기
+    $.ajax({
+        type: 'POST',
+        url: `/api/posts/create`,
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function () {
+            window.location.reload();
+        },
+        error: function () {
+            window.location.reload();
+        }
+    });
+}
+
 function getPosts() {
     // AJAX를 사용하여 서버에 POST 요청 보내기
     $.ajax({
@@ -55,10 +79,10 @@ function addHtmlDetails(id, modifiedDate, title, username, content) {
             <button id="${id}-edit" onclick="editPost('${id}')">수정</button>
             <div id="showForEdit">
 
-                <label for="editTitle">아이디:</label> <!-- Label for password input -->
+                <label for="editTitle">제목:</label> <!-- Label for password input -->
                 <input type="text" id="editTitle" name="editTitle" required><br><br> <!-- Password input -->
                 
-                <label for="editContent">비밀번호:</label> <!-- Label for password input -->
+                <label for="editContent">내용:</label> <!-- Label for password input -->
                 <input type="text" id="editContent" name="editContent" required><br><br> <!-- Password input -->
                 
                 <button type="submit" onclick="submitEditPost('${id}')">수정완료</button> <!-- Submit button for form -->
@@ -68,9 +92,11 @@ function addHtmlDetails(id, modifiedDate, title, username, content) {
     $('#detail-box').append(tempHtml);
     $(`#showForEdit`).hide();
 }
+
 function editPost(id) {
     $(`#showForEdit`).show();
 }
+
 function submitEditPost(id) {
     let title = $('#editTitle').val();
     let content = $('#editContent').val();
@@ -95,6 +121,7 @@ function submitEditPost(id) {
         }
     });
 }
+
 function deletePost(id) {
     // AJAX를 사용하여 서버에 POST 요청 보내기
     $.ajax({
@@ -109,7 +136,6 @@ function deletePost(id) {
         }
     });
 }
-
 
 
 function signup() {
