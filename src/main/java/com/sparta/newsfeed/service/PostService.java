@@ -76,11 +76,8 @@ public class PostService {
     }
 
     //작성자의 전체 게시물 조회
-    public List<PostResponseDto> getPostsByUserId(Long userId, UserDetailsImpl userDetails) {
-        if(!userId.equals(userDetails.getUser().getId())){
-            throw new RejectedExecutionException("가입된 유저가 아닙니다.");
-        }
-        List<Post> posts = postRepository.findByUserId(userId);
+    public List<PostResponseDto> getPostsByUserId(UserDetailsImpl userDetails) {
+        List<Post> posts = postRepository.findByUserId(userDetails.getUser().getId());
         List<PostResponseDto> responseDtoList = new ArrayList<>();
 
         for (Post post : posts) {
