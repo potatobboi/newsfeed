@@ -1,4 +1,4 @@
-package com.sparta.newsfeed.security;
+package com.sparta.newsfeed.service;
 
 import com.sparta.newsfeed.dto.SignupRequestDto;
 import com.sparta.newsfeed.dto.UpdatePasswordDto;

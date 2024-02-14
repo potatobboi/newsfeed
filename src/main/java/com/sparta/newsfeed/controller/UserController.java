@@ -2,7 +2,7 @@ package com.sparta.newsfeed.controller;
 
 import com.sparta.newsfeed.dto.*;
 import com.sparta.newsfeed.security.UserDetailsImpl;
-import com.sparta.newsfeed.security.UserService;
+import com.sparta.newsfeed.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
