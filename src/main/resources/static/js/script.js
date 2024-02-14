@@ -57,6 +57,24 @@ function getPosts() {
     });
 }
 
+function getmyPosts() {
+    // AJAX를 사용하여 서버에 POST 요청 보내기
+    $.ajax({
+        type: 'GET',
+        url: '/api/posts/myPosts',
+        contentType: 'application/json',
+        success: function (response) {
+            for (let i = 0; i < response.length; i++) {
+                addHtml(response[i].id, response[i].username, response[i].title);
+            }
+        },
+        error: function (xhr, status, error) {
+            var errorMessage = xhr.responseJSON.message;
+            alert(errorMessage);
+        }
+    });
+}
+
 function addHtml(id, username, title) {
     let tempHtml =
         `<div class="card" onclick="showDetails('${id}')"/>

@@ -28,9 +28,9 @@ public class PostController {
 
     //작성자의 전체 게시물 조회
     @ResponseBody
-    @GetMapping("/userId/{userId}")
-    public List<PostResponseDto> getPostsByUserId(@PathVariable Long userId, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return postService.getPostsByUserId(userId, userDetails);
+    @GetMapping("/myPosts")
+    public List<PostResponseDto> getPostsByUserId(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        return postService.getPostsByUserId(userDetails);
     }
 
     //게시물 1건 조회
