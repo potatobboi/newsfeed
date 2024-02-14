@@ -151,7 +151,7 @@ function getCommentsByPostId(postid) {
                 let modifiedDate = response[i]['modifiedAt'];
                 let username = response[i]['username']
                 let commentContent = response[i]['commentContent'];
-                addHtmlComment(id, modifiedDate, username, commentContent);
+                addHtmlComment(postid, id, modifiedDate, username, commentContent);
             }
         },
         error: function (xhr, status, error) {
@@ -160,18 +160,54 @@ function getCommentsByPostId(postid) {
         }
     });
 }
-function addHtmlComment(id, modifiedAt, username, commentContent) {
+function addHtmlComment(postid, id, modifiedAt, username, commentContent) {
     let tempHtml =
         `<div class="comment">
             <p>${username}</p>
             <p>${modifiedAt}</p>
             <h2>${commentContent}</h2>
+            <button id="${id}-edit" onclick="editComment('${id}')">수정</button>
+            <div id="${id}-showForEditComment">
+                <label for="${id}-editCommentValue">내용:</label> <!-- Label for password input -->
+                <input type="text" id="${id}-editCommentValue" name="${id}-editCommentValue" required><br><br> <!-- Password input -->
+                <button type="submit" onclick="submitEditComment('${id}', '${postid}')">수정완료</button> <!-- Submit button for form -->
+            </div>
+            
+            <button id="${id}-delete" onclick="deleteComment('${id}')">삭제</button>
         </div>`;
     $('#comments-box').append(tempHtml);
+    $(`#${id}-showForEditComment`).hide();
 }
 
+function editComment(id) {
+    $(`#${id}-showForEditComment`).show();
+}
 function editPost() {
     $(`#showForEdit`).show();
+}
+
+function submitEditComment(id, postid) {
+    let commentContent = $(`#${id}-editCommentValue`).val();
+
+    // 전송할 데이터 객체 생성
+    let data = {
+        'postId': postid,
+        'commentContent': commentContent
+    };
+
+    // AJAX를 사용하여 서버에 POST 요청 보내기
+    $.ajax({
+        type: 'PUT',
+        url: `/api/comments/${id}`,
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function () {
+            window.location.reload();
+        },
+        error: function () {
+            window.location.reload();
+        }
+    });
 }
 
 function submitEditPost(id) {
@@ -198,6 +234,21 @@ function submitEditPost(id) {
         }
     });
 }
+function deleteComment(id) {
+    // AJAX를 사용하여 서버에 POST 요청 보내기
+    $.ajax({
+        type: 'DELETE',
+        url: `/api/comments/${id}`,
+        contentType: 'application/json',
+        success: function () {
+            window.location.reload();
+        },
+        error: function () {
+            window.location.reload();
+        }
+    });
+}
+
 
 function deletePost(id) {
     // AJAX를 사용하여 서버에 POST 요청 보내기
