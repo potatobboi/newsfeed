@@ -2,7 +2,7 @@ package com.sparta.newsfeed.controller;
 
 import com.sparta.newsfeed.dto.RecommendRequestDto;
 import com.sparta.newsfeed.service.RecommendService;
-import com.sparta.newsfeed.user.security.UserDetailsImpl;
+import com.sparta.newsfeed.security.UserDetailsImpl;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 

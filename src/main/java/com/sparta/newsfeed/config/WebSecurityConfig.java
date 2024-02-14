@@ -1,10 +1,10 @@
-package com.sparta.newsfeed.user.config;
+package com.sparta.newsfeed.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.newsfeed.user.jwt.JwtAuthenticationFilter;
-import com.sparta.newsfeed.user.jwt.JwtAuthorizationFilter;
-import com.sparta.newsfeed.user.jwt.JwtUtil;
-import com.sparta.newsfeed.user.security.UserDetailsServiceImpl;
+import com.sparta.newsfeed.jwt.JwtAuthenticationFilter;
+import com.sparta.newsfeed.jwt.JwtAuthorizationFilter;
+import com.sparta.newsfeed.jwt.JwtUtil;
+import com.sparta.newsfeed.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
