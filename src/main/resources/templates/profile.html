@@ -17,6 +17,30 @@
         $(document).ready(function () {
             $(`#showForEdit`).hide();
             $(`#showForEditPassword`).hide();
+            const auth = getToken();
+            if (auth === '') {
+                alert("로그인을 하세요")
+                window.location.href = 'http://localhost:8080/api/users/login-page';
+            } else {
+                $.ajax({
+                    type: 'GET',
+                    url: `/api/users`,
+                    contentType: 'application/json',
+                    success: function (response) {
+                        let username = response['username'];
+                        let info = response['info'];
+                        let tempHtml = `
+                            <p id="username">${username}</p> <!-- Paragraph for displaying username -->
+                            <p id="info">${info}</p> <!-- Paragraph for displaying info data -->
+                        `
+                        $('#profile-info').append(tempHtml);
+                    },
+                    error: function (xhr, status, error) {
+                        var errorMessage = xhr.responseJSON.message;
+                        alert(errorMessage);
+                    }
+                });
+            }
         })
     </script>
 </head>
@@ -26,8 +50,7 @@
 </header>
 
 <div id="profile-info">
-    <p id="username" th:text="${username}">username</p> <!-- Paragraph for displaying username -->
-    <p id="info" th:text="${info}">info</p> <!-- Paragraph for displaying info data -->
+
 </div>
 
 <div id="buttons">

@@ -34,6 +34,11 @@ public class UserController {
         return "login";
     }
 
+    @GetMapping("/profile")
+    public String profilePage() {
+        return "profile";
+    }
+
     @PostMapping("/signup")
     public ResponseEntity<CommonResponseDto> createUser(@RequestBody @Valid SignupRequestDto signupRequestDto, BindingResult bindingResult) {
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
