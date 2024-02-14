@@ -106,9 +106,68 @@ function addHtmlDetails(id, modifiedDate, title, username, content) {
                 <button type="submit" onclick="submitEditPost('${id}')">수정완료</button> <!-- Submit button for form -->
             </div>
             <button id="${id}-delete" onclick="deletePost('${id}')">삭제</button>
+            <div id="comments-box">
+                <label for="createComment">댓글달기:</label> <!-- Label for password input -->
+                <input type="text" id="createComment" name="createComment" required><br><br> <!-- Password input -->
+                
+                <button type="submit" onclick="createCommentInPost('${id}')">수정완료</button> <!-- Submit button for form -->
+            </div>
         </div>`;
     $('#detail-box').append(tempHtml);
     $(`#showForEdit`).hide();
+    getCommentsByPostId(id);
+}
+function createCommentInPost(id) {
+    let commentContent = $('#createComment').val();
+
+    // 전송할 데이터 객체 생성
+    let data = {
+        'postId': id,
+        'commentContent': commentContent,
+    };
+
+    // AJAX를 사용하여 서버에 POST 요청 보내기
+    $.ajax({
+        type: 'POST',
+        url: `/api/comments`,
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function () {
+            window.location.reload();
+        },
+        error: function () {
+            window.location.reload();
+        }
+    });
+}
+function getCommentsByPostId(postid) {
+    $.ajax({
+        type: 'GET',
+        url: `/api/comments/${postid}`,
+        contentType: 'application/json',
+        success: function (response) {
+            for (let i = 0; i < response.length; i++) {
+                let id = response[i]['id'];
+                let modifiedAt = response[i]['modifiedAt'];
+                let username = response[i]['username']
+                let commentContent = response[i]['commentContent'];
+                addHtmlComment(id, modifiedAt, username, commentContent);
+            }
+        },
+        error: function (xhr, status, error) {
+            var errorMessage = xhr.responseJSON.message;
+            alert(errorMessage);
+        }
+    });
+}
+function addHtmlComment(id, modifiedAt, username, commentContent) {
+    let tempHtml =
+        `<div class="comment">
+            <p>${username}</p>
+            <p>${modifiedAt}</p>
+            <h2>${commentContent}</h2>
+        </div>`;
+    $('#comments-box').append(tempHtml);
 }
 
 function editPost() {
