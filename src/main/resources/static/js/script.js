@@ -143,7 +143,7 @@ function createCommentInPost(id) {
 function getCommentsByPostId(postid) {
     $.ajax({
         type: 'GET',
-        url: `/api/comments/${postid}`,
+        url: `/api/comments?postId=${postid}`,
         contentType: 'application/json',
         success: function (response) {
             for (let i = 0; i < response.length; i++) {

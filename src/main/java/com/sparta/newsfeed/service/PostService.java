@@ -38,7 +38,7 @@ public class PostService {
 
     //게시물 전체 조회
     public List<PostResponseDto> getAllPost() {
-        List<Post> postList = postRepository.findAll(Sort.by(Sort.Direction.DESC, "modifiedDate"));
+        List<Post> postList = postRepository.findAll(Sort.by(Sort.Direction.DESC, "modifiedAt"));
         List<PostResponseDto> responseDtoList = new ArrayList<>();
 
         for(Post post : postList){
