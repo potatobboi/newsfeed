@@ -1,4 +1,4 @@
-package com.sparta.newsfeed.user.dto;
+package com.sparta.newsfeed.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

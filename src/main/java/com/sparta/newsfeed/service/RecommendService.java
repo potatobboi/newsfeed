@@ -3,7 +3,7 @@ package com.sparta.newsfeed.service;
 import com.sparta.newsfeed.dto.RecommendRequestDto;
 import com.sparta.newsfeed.entity.Recommend;
 import com.sparta.newsfeed.repository.RecommendRepository;
-import com.sparta.newsfeed.user.security.UserDetailsImpl;
+import com.sparta.newsfeed.security.UserDetailsImpl;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -21,7 +21,9 @@ a {
 a:hover {
     text-decoration: underline;
 }
-
+#create-box,
+#detail-box,
+#cards-box,
 #signup-form,
 #login-form {
     width: 300px;

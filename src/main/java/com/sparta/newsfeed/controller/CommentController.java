@@ -4,7 +4,7 @@ package com.sparta.newsfeed.controller;
 import com.sparta.newsfeed.dto.CommentRequestDto;
 import com.sparta.newsfeed.dto.CommentResponseDto;
 import com.sparta.newsfeed.service.CommentService;
-import com.sparta.newsfeed.user.security.UserDetailsImpl;
+import com.sparta.newsfeed.security.UserDetailsImpl;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 

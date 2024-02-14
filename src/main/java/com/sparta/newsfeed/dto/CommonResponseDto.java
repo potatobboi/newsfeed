@@ -1,4 +1,4 @@
-package com.sparta.newsfeed.user.dto;
+package com.sparta.newsfeed.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

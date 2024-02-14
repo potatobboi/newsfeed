@@ -1,8 +1,8 @@
-package com.sparta.newsfeed.user.controller;
+package com.sparta.newsfeed.controller;
 
-import com.sparta.newsfeed.user.dto.*;
-import com.sparta.newsfeed.user.security.UserDetailsImpl;
-import com.sparta.newsfeed.user.service.UserService;
+import com.sparta.newsfeed.dto.*;
+import com.sparta.newsfeed.security.UserDetailsImpl;
+import com.sparta.newsfeed.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Slf4j(topic = "UserController")
 @Controller

@@ -1,6 +1,6 @@
-package com.sparta.newsfeed.user.entity;
+package com.sparta.newsfeed.entity;
 
-import com.sparta.newsfeed.user.dto.SignupRequestDto;
+import com.sparta.newsfeed.dto.SignupRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

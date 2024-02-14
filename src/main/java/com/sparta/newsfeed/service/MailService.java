@@ -1,9 +1,9 @@
-package com.sparta.newsfeed.user.service;
+package com.sparta.newsfeed.service;
 
-import com.sparta.newsfeed.user.dto.MailRequestDto;
-import com.sparta.newsfeed.user.entity.Mail;
-import com.sparta.newsfeed.user.repository.MailRepository;
-import com.sparta.newsfeed.user.repository.UserRepository;
+import com.sparta.newsfeed.dto.MailRequestDto;
+import com.sparta.newsfeed.entity.Mail;
+import com.sparta.newsfeed.repository.MailRepository;
+import com.sparta.newsfeed.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

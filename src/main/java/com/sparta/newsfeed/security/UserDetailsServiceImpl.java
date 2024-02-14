@@ -1,7 +1,7 @@
-package com.sparta.newsfeed.user.security;
+package com.sparta.newsfeed.security;
 
-import com.sparta.newsfeed.user.entity.User;
-import com.sparta.newsfeed.user.repository.UserRepository;
+import com.sparta.newsfeed.entity.User;
+import com.sparta.newsfeed.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
