@@ -52,7 +52,7 @@ public class UserService {
     }
 
     @Transactional // 비밀번호 수정
-    public CommonResponseDto updatePassword(UpdatePasswordDto updatePasswordDto, String username) {
+    public void updatePassword(UpdatePasswordDto updatePasswordDto, String username) {
         User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("회원정보가 없습니다."));
 
@@ -62,7 +62,5 @@ public class UserService {
 
         String encodedPassword = passwordEncoder.encode(updatePasswordDto.getPostPassword());
         user.updatePassword(encodedPassword);
-
-        return new CommonResponseDto("비밀번호 수정 성공", 200);
     }
 }

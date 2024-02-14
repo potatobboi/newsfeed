@@ -20,13 +20,12 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping("/{postId}")
-    public List<CommentResponseDto> getComments(@PathVariable Long postId){
-        List<CommentResponseDto> temp = commentService.getComments(postId);
-        return temp;
+    @GetMapping
+    public List<CommentResponseDto> getComments(@RequestParam Long postId){
+        return commentService.getComments(postId);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public CommentResponseDto createComment(@RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         System.out.println("requestDto = " + requestDto.toString());
         return commentService.createComment(requestDto, userDetails);
