@@ -22,7 +22,7 @@ public class PostResponseDto {
         this.title = post.getTitle();
         this.content= post.getContent();
         this.username = post.getUsername();
-        this.createdDate = post.getCreatedDate();
-        this.modifiedDate = post.getModifiedDate();
+        this.createdDate = post.getCreatedAt();
+        this.modifiedDate = post.getModifiedAt();
     }
 }
