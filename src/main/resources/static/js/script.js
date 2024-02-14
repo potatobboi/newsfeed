@@ -110,7 +110,7 @@ function addHtmlDetails(id, modifiedDate, title, username, content) {
                 <label for="createComment">댓글달기:</label> <!-- Label for password input -->
                 <input type="text" id="createComment" name="createComment" required><br><br> <!-- Password input -->
                 
-                <button type="submit" onclick="createCommentInPost('${id}')">수정완료</button> <!-- Submit button for form -->
+                <button type="submit" onclick="createCommentInPost('${id}')">댓글 작성 완료</button> <!-- Submit button for form -->
             </div>
         </div>`;
     $('#detail-box').append(tempHtml);
@@ -129,7 +129,7 @@ function createCommentInPost(id) {
     // AJAX를 사용하여 서버에 POST 요청 보내기
     $.ajax({
         type: 'POST',
-        url: `/api/comments`,
+        url: `/api/comments/create`,
         contentType: 'application/json',
         data: JSON.stringify(data),
         success: function () {
@@ -148,10 +148,10 @@ function getCommentsByPostId(postid) {
         success: function (response) {
             for (let i = 0; i < response.length; i++) {
                 let id = response[i]['id'];
-                let modifiedAt = response[i]['modifiedAt'];
+                let modifiedDate = response[i]['modifiedAt'];
                 let username = response[i]['username']
                 let commentContent = response[i]['commentContent'];
-                addHtmlComment(id, modifiedAt, username, commentContent);
+                addHtmlComment(id, modifiedDate, username, commentContent);
             }
         },
         error: function (xhr, status, error) {

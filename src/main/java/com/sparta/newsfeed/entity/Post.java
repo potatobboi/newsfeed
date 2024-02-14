@@ -5,9 +5,11 @@ import com.sparta.newsfeed.security.UserDetailsImpl;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "posts")
 public class Post extends Timestamped{
