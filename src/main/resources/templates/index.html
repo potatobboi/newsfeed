@@ -1,40 +1,56 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>홈</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홈</title>
 
-  <link rel="stylesheet" href="/css/style.css">
-  <script defer src="/js/script.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <script defer src="/js/script.js"></script>
 
 
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-          integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      getPosts()
-    })
-
-  </script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            getPosts()
+            const auth = getToken();
+            if (auth === '') {
+                $('#login-true').hide();
+                $('#login-false').show();
+                $(`#create-box`).hide();
+            } else {
+                $('#login-true').show();
+                $('#login-false').hide();
+                $(`#create-box`).hide();
+            }
+        })
+    </script>
 </head>
 <body>
 <header>
-  <h1>오운식뭐</h1> <!-- Header with specified text -->
-  <a href="login.html">로그인</a> <!-- Link to login page -->
-  <a href="signup.html">회원가입</a> <!-- Link to signup page -->
+    <h1>오운식뭐</h1> <!-- Header with specified text -->
+    <div id="login-false">
+        <a href="login.html">로그인</a> <!-- Link to login page -->
+    </div>
+    <div id="login-true">
+        <a onclick="logout()">로그아웃</a> <!-- Link to login page -->
+        <a onclick="showPost()">글 작성하기</a> <!-- Link to signup page -->
+        <a href="profile.html">마이페이지</a> <!-- Link to signup page -->
+    </div>
+
 </header>
 <div id="create-box">
 
-  <label for="createTitle">제목:</label> <!-- Label for password input -->
-  <input type="text" id="createTitle" name="createTitle" required><br><br> <!-- Password input -->
+    <label for="createTitle">제목:</label> <!-- Label for password input -->
+    <input type="text" id="createTitle" name="createTitle" required><br><br> <!-- Password input -->
 
-  <label for="createContent">내용:</label> <!-- Label for password input -->
-  <input type="text" id="createContent" name="createContent" required><br><br> <!-- Password input -->
+    <label for="createContent">내용:</label> <!-- Label for password input -->
+    <input type="text" id="createContent" name="createContent" required><br><br> <!-- Password input -->
 
-  <button type="submit" onclick="submitPost('${id}')">작성완료</button>
+    <button type="submit" onclick="submitPost('${id}')">작성완료</button>
 </div>
 <div id="detail-box">
 

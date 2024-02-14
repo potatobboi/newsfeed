@@ -1,3 +1,12 @@
+function getToken() {
+    let auth = Cookies.get('Authorization');
+
+    if (auth === undefined) {
+        return '';
+    }
+
+    return auth;
+}
 function submitPost(id) {
     let title = $('#createTitle').val();
     let content = $('#createContent').val();
@@ -20,6 +29,14 @@ function submitPost(id) {
             window.location.reload();
         }
     });
+}
+function logout() {
+    // 토큰 삭제
+    Cookies.remove('Authorization', {path: '/'});
+    window.location.reload();
+}
+function showPost() {
+    $(`#create-box`).show();
 }
 
 function getPosts() {
@@ -50,6 +67,7 @@ function addHtml(id, username, title) {
 }
 
 function showDetails(id) {
+    $('#detail-box').empty();
     $.ajax({
         type: 'GET',
         url: `/api/posts/postId/${id}`,
@@ -76,7 +94,7 @@ function addHtmlDetails(id, modifiedDate, title, username, content) {
             <p>${modifiedDate}</p>
             <h1>${title}</h1>
             <h2>${content}</h2>
-            <button id="${id}-edit" onclick="editPost('${id}')">수정</button>
+            <button id="${id}-edit" onclick="editPost()">수정</button>
             <div id="showForEdit">
 
                 <label for="editTitle">제목:</label> <!-- Label for password input -->
@@ -93,7 +111,7 @@ function addHtmlDetails(id, modifiedDate, title, username, content) {
     $(`#showForEdit`).hide();
 }
 
-function editPost(id) {
+function editPost() {
     $(`#showForEdit`).show();
 }
 
