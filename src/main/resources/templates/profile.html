@@ -40,6 +40,7 @@
                         alert(errorMessage);
                     }
                 });
+                getmyPosts()
             }
         })
     </script>
@@ -49,11 +50,11 @@
     <h1><a href="http://localhost:8080/">오운식뭐</a></h1> <!-- Header with link to index page -->
 </header>
 
-<div id="profile-info">
-
-</div>
 
 <div id="buttons">
+    <div id="profile-info">
+
+    </div>
     <button onclick="editInfo()">한줄 소개 수정</button> <!-- Button for editing info -->
     <div id="showForEdit">
         <label for="editinfo">한줄소개:</label> <!-- Label for password input -->
@@ -69,6 +70,12 @@
 
         <button type="submit" onclick="submitEditPassword()">한줄소개 수정하기</button> <!-- Submit button for form -->
     </div>
+</div>
+<div id="detail-box">
+
+</div>
+<div id="cards-box">
+
 </div>
 </body>
 </html>
