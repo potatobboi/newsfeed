@@ -21,22 +21,22 @@ public class CommentController {
     }
 
     @GetMapping
-    public List<CommentResponseDto> getComments(@RequestParam Long postId){
+    public List<CommentResponseDto> getComments(@RequestParam Long postId){//postId기준 모든 댓글 조회
         return commentService.getComments(postId);
     }
 
-    @PostMapping("/create")
+    @PostMapping("/create")//댓글 생성
     public CommentResponseDto createComment(@RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         System.out.println("requestDto = " + requestDto.toString());
         return commentService.createComment(requestDto, userDetails);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}")//댓글 수정
     public Long updateComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return commentService.updateComment(id,requestDto, userDetails);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")//댓글 삭제
     public Long deleteComment(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return commentService.deleteComment(id, userDetails);
     }

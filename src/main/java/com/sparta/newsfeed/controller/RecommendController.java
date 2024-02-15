@@ -32,12 +32,12 @@ public class RecommendController {
         return recommendService.deleteRecommend(requestDto, userDetails);
     }
 
-    @GetMapping("/state")
+    @GetMapping("/state")//추천 가능한지 확인
     public boolean getState(@RequestParam Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return recommendService.recommendState(postId, userDetails);
     }
 
-    @GetMapping("/existsrecommend")
+    @GetMapping("/existsrecommend")//추천을 한 유저인지 확인
     public boolean existsByPostIdAndRecommender(@RequestParam Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return recommendService.existsByPostIdAndRecommender(postId, userDetails.getUsername());
     }

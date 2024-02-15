@@ -40,7 +40,7 @@ public class RecommendService {
 
     public Long getRecommend(Long postId) { //postId 기준 생성된 추천 카운트
         return countByPostId(postId);
-    }
+    }//추천 가져오기
 
 
 
@@ -54,18 +54,18 @@ public class RecommendService {
 
     public void deleteByPostId(Long postId){ //postId 기준으로 모든 추천 삭제 Post삭제시 필요
         recommendRepository.deleteByPostId(postId);
-    }
+    }//postId기준 추천 전부 삭제
 
     public Long countByPostId(Long postId){//postId를 기준으로 추천을 카운트하여 반환
         return recommendRepository.countByPostId(postId);
-    }
+    }//추천수 조회
 
-    public boolean checkWriter(Long id, String username){
+    public boolean checkWriter(Long id, String username){//작성자인지 확인
         Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 postId 입니다."));
         return username.equals(post.getUsername());
     }
 
-    public boolean recommendState(Long postId, UserDetailsImpl userDetails){
+    public boolean recommendState(Long postId, UserDetailsImpl userDetails){//작성자가 아니고 추천이 간으한 유저인지 확인
         String username = userDetails.getUsername();
         System.out.println(username);
         return (!existsByPostIdAndRecommender(postId, username) && !checkWriter(postId, username));
