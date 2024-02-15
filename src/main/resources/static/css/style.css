@@ -1,0 +1,65 @@
+/* Common styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #ff0000; /* Strong red background for header */
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+#buttons,
+#create-box,
+#detail-box,
+#cards-box,
+#signup-form,
+#login-form {
+    width: 300px;
+    margin: 50px auto; /* Center aligning the form */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+button[type="submit"],
+button[type="button"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button[type="submit"],
+button[type="button"] {
+    background-color: #ff0000; /* Strong red background for buttons */
+    color: white;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover,
+button[type="button"]:hover {
+    background-color: #cc0000; /* Darker red on hover */
+}
