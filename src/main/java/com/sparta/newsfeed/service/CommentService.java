@@ -51,9 +51,8 @@ public class CommentService {
         return commentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("선택한 댓글은 존재하지 않습니다."));
     }
 
-    public boolean deleteCommentByPostId(Long postId){ //post의 id를 기준으로 모든 댓글 삭제
+    public void deleteCommentByPostId(Long postId){ //post의 id를 기준으로 모든 댓글 삭제
         commentRepository.deleteByPostId(postId);
-        return false;
     }
 
     public boolean validateUsername(Comment comment, UserDetailsImpl userDetails){

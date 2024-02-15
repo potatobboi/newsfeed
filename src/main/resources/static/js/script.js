@@ -86,6 +86,56 @@ function addHtml(id, username, title) {
 
 function showDetails(id) {
     $('#detail-box').empty();
+    let recommnedCount;
+    let state;
+    let deletestate;
+    $.ajax({
+        type: 'GET',
+        url: `/api/recommends?postId=${id}`,
+        contentType: 'application/json',
+        async: false,
+        success: function (response) {
+            recommnedCount = response;
+        },
+        error: function (xhr, status, error) {
+            var errorMessage = xhr.responseJSON.message;
+            alert(errorMessage);
+        }
+    });
+    $.ajax({
+        type: 'GET',
+        url: `/api/recommends/state?postId=${id}`,
+        contentType: 'application/json',
+        async: false,
+        success: function (response) {
+            if(response==true){
+                state = true;
+            }else {
+                state = false;
+            }
+        },
+        error: function (xhr, status, error) {
+            state = false;
+        }
+    });
+    $.ajax({
+        type: 'GET',
+        url: `/api/recommends/existsrecommend?postId=${id}`,
+        contentType: 'application/json',
+        async: false,
+        success: function (response) {
+            if(response==true){
+                deletestate = true;
+            }else {
+                deletestate = false;
+            }
+            console.log(deletestate);
+        },
+        error: function (xhr, status, error) {
+            deletestate = false;
+            console.log(deletestate);
+        }
+    });
     $.ajax({
         type: 'GET',
         url: `/api/posts/postId/${id}`,
@@ -96,7 +146,8 @@ function showDetails(id) {
             let title = response['title'];
             let username = response['username']
             let content = response['content'];
-            addHtmlDetails(id, modifiedDate, title, username, content);
+            console.log(recommnedCount);
+            addHtmlDetails(id, modifiedDate, title, username, content, recommnedCount, state, deletestate);
         },
         error: function (xhr, status, error) {
             var errorMessage = xhr.responseJSON.message;
@@ -105,13 +156,18 @@ function showDetails(id) {
     });
 }
 
-function addHtmlDetails(id, modifiedDate, title, username, content) {
+function addHtmlDetails(id, modifiedDate, title, username, content, recommnedCount, state, deletestate) {
     let tempHtml =
         `<div class="card">
             <p>${username}</p>
             <p>${modifiedDate}</p>
             <h1>${title}</h1>
             <h2>${content}</h2>
+            <div>
+                <h1 id="recommendCount">${recommnedCount}</h1>
+                <button id="recommendationBtn" ${state ? '' : 'hidden'} onclick="recommendation('${id}')">추천하기</button>
+                <button id="unrecommendationBtn" ${deletestate ? '' : 'hidden'} onclick="deleteRecommend('${id}')">삭제하기</button>
+            </div>
             <button id="${id}-edit" onclick="editPost()">수정</button>
             <div id="showForEdit">
 
@@ -427,4 +483,64 @@ function submitEditPassword() {
             alert(errorMessage);
         }
     });
+}
+
+function getRecommend(postid){
+    $.ajax({
+        type: 'GET',
+        url: `/api/recommends?postId=${postid}`,
+        contentType: 'application/json',
+        success: function (response) {
+            console.log(response)
+        },
+        error: function (xhr, status, error) {
+            var errorMessage = xhr.responseJSON.message;
+            alert(errorMessage);
+        }
+    });
+
+}
+function recommendation(id){
+    console.log("함수 실행됨");
+    let count;
+    let data = {
+        'postId' : `${id}`
+    };
+    $.ajax({
+        type: 'POST',
+        url: `/api/recommends/create`,
+        contentType: 'application/json',
+        async: false,
+        data: JSON.stringify(data),
+        success: function (response) {
+            count = response;
+        },
+        error: function (xhr, status, error) {
+        }
+    });
+    document.getElementById('unrecommendationBtn').removeAttribute('hidden');
+    document.getElementById('recommendationBtn').setAttribute('hidden', 'true');
+    $("#recommendCount").text(count);
+}
+function deleteRecommend(id){
+    console.log("함수 실행됨");
+    let count;
+    let data = {
+        'postId' : `${id}`
+    };
+    $.ajax({
+        type: 'DELETE',
+        url: `/api/recommends/delete`,
+        contentType: 'application/json',
+        async: false,
+        data: JSON.stringify(data),
+        success: function (response) {
+            count = response;
+        },
+        error: function (xhr, status, error) {
+        }
+    });
+    document.getElementById('recommendationBtn').removeAttribute('hidden');
+    document.getElementById('unrecommendationBtn').setAttribute('hidden', 'true');
+    $("#recommendCount").text(count);
 }

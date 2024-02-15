@@ -32,5 +32,14 @@ public class RecommendController {
         return recommendService.deleteRecommend(requestDto, userDetails);
     }
 
+    @GetMapping("/state")
+    public boolean getState(@RequestParam Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return recommendService.recommendState(postId, userDetails);
+    }
+
+    @GetMapping("/existsrecommend")
+    public boolean existsByPostIdAndRecommender(@RequestParam Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return recommendService.existsByPostIdAndRecommender(postId, userDetails.getUsername());
+    }
 
 }
