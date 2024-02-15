@@ -62,8 +62,7 @@
   - 와이어 프레임에 나온 명세를 최대한 지켰습니다.
 
 ---
-### 프론트 미구현 사항
-- 댓글 좋아요 미구현
+
 
 ###### 기술스택 출처: https://cocoon1787.tistory.com/689
 ###### 팀원표 출처: https://profile-table-md.vercel.app/
